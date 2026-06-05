@@ -1,0 +1,457 @@
+/* ============================================================
+   Prodeteca · login.css
+   Stadium-ticket login: full-bleed pitch photo + a ticket-shaped
+   card. The wordmark uses Big Shoulders Display (sports-display
+   typeface) for the broadcast feel. Body type stays DM Sans.
+   ============================================================ */
+
+/* ---------- Body / stage ---------- */
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 20px;
+  position: relative;
+  overflow-x: hidden;
+  /* Base color so flashes of bg show brand color while photo loads */
+  background: #050917;
+}
+
+/* Pitch photo — sharper than before, lets you read it as a stadium */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    url("https://images.unsplash.com/photo-1551958219-acbc608c6377?auto=format&fit=crop&w=2400&q=80")
+      center 30% / cover no-repeat;
+  filter: blur(14px) saturate(120%) brightness(0.78);
+  transform: scale(1.08);
+  z-index: 0;
+}
+
+/* Dramatic dark gradient + brand-tinted vignette */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(110% 80% at 50% 20%, rgba(0,86,216,0.45) 0%, transparent 55%),
+    radial-gradient(120% 90% at 50% 100%, rgba(10,18,48,0.85) 0%, rgba(10,18,48,0.55) 50%, transparent 80%),
+    linear-gradient(180deg, rgba(10,18,48,0.55) 0%, rgba(10,18,48,0.15) 40%, rgba(10,18,48,0.65) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Subtle pitch motif overlay — halfway line + centre circle on top
+   of the photo, so the venue reads as a "broadcast wide shot". */
+.login-pitch {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 168px, rgba(255,255,255,0.10) 168px 169.5px, transparent 170px),
+    linear-gradient(90deg, transparent 0%, transparent 49.92%, rgba(255,255,255,0.10) 49.92%, rgba(255,255,255,0.10) 50.08%, transparent 50.08%);
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+/* Grain overlay (DS signature) — across the whole page */
+.login-pitch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain-svg);
+  mix-blend-mode: overlay;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ---------- The ticket-shaped card ---------- */
+.login-card {
+  position: relative;
+  z-index: 2;
+  background: var(--color-card);
+  border-radius: var(--r-lg);
+  padding: 32px 36px 32px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  box-shadow:
+    0 50px 100px -30px rgba(0,0,0,0.55),
+    0 8px 24px rgba(10,18,48,0.30);
+  animation: loginIn 480ms cubic-bezier(.2,.7,.3,1);
+  /* Ticket perforation: notches on the two sides between the body
+     of the ticket and the "stub" at the bottom. */
+}
+
+@keyframes loginIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+
+/* Host-flag band removed at user's request — keep clean top edge */
+
+/* Subtle pitch-arc echo in the lower-left of the card */
+.login-card::after {
+  content: "";
+  position: absolute;
+  bottom: -1px; left: 0; right: 0;
+  height: 110px;
+  background:
+    radial-gradient(circle at 50% 110%, transparent 78px, rgba(0,86,216,0.05) 78.5px 79px, transparent 79.5px);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+}
+
+.login-card > * { position: relative; z-index: 1; }
+
+/* ---------- Small isotipo at the top of the card ---------- */
+.login-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 4px 12px 4px 4px;
+  background: var(--ink-25);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+
+.login-brand::before {
+  content: "";
+  width: 24px;
+  height: 24px;
+  background: url("/producteca-mark.svg") center/contain no-repeat;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+/* ---------- Wordmark: "PRODETECA" in Big Shoulders Display ---------- */
+.login-logo {
+  font-family: var(--font-sport);
+  font-size: clamp(3.5rem, 12vw, 5.2rem);
+  font-weight: 800;
+  letter-spacing: 0.005em;
+  line-height: 0.85;
+  color: var(--ink-1000);
+  text-transform: uppercase;
+  margin: 0 0 2px;
+  display: block;
+  /* The block-spread is part of the look — a stadium nameplate. */
+}
+
+/* Replace any inline content with PRODETECA via CSS so the JS
+   never overrides it. The HTML keeps the <div class="login-logo">
+   wrapper for backwards compat. */
+.login-logo > .word::after {
+  content: "·";
+  color: var(--brand-blue);
+  margin-left: 0.05em;
+}
+
+.login-logo .word {
+  display: inline-block;
+}
+
+.login-logo .word.alt {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--brand-blue);
+}
+
+/* Tournament tag under the wordmark */
+.login-tournament {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0 8px;
+  font-family: var(--font-sport);
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.login-tournament span {
+  display: inline-block;
+  padding: 0 2px;
+}
+
+.login-tournament .year {
+  color: var(--ink-1000);
+  letter-spacing: 0.20em;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.login-tournament .sep {
+  width: 14px;
+  height: 1.5px;
+  background: var(--color-border);
+  display: inline-block;
+  letter-spacing: 0;
+}
+
+/* Tagline */
+.login-title {
+  font-family: var(--font-display);
+  font-size: 1.0rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink-700);
+  margin: 10px 0 4px;
+  line-height: 1.4;
+}
+
+.login-title em {
+  font-style: italic;
+  color: var(--brand-blue);
+  font-weight: 600;
+}
+
+/* Domain message */
+.login-domain-msg {
+  font-size: 0.85rem;
+  color: var(--ink-500);
+  margin: 0 0 26px;
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+
+.login-domain-msg strong {
+  font-weight: 600;
+  color: var(--ink-1000);
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  padding: 2px 8px;
+  background: var(--ink-50);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+}
+
+/* Perforation divider — subtle dotted line, evokes a stadium ticket */
+.login-perforation {
+  position: relative;
+  height: 1px;
+  margin: 0 -36px 24px;
+  background-image: linear-gradient(90deg, var(--color-border) 50%, transparent 50%);
+  background-size: 8px 1px;
+}
+
+.login-perforation::before,
+.login-perforation::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  background: #050917;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  /* Match the photo bg outside the card so the notches "punch through" */
+}
+
+.login-perforation::before { left: -9px; }
+.login-perforation::after  { right: -9px; }
+
+/* ---------- Google button ---------- */
+.btn-google {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 22px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-pill);
+  background: var(--color-card);
+  color: var(--ink-1000);
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-family: var(--font-body);
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  min-height: 52px;
+  box-shadow: var(--sh-xs);
+  transition:
+    background var(--t-fast),
+    border-color var(--t-fast),
+    box-shadow var(--t-default),
+    transform var(--t-fast);
+}
+
+.btn-google:hover {
+  background: var(--ink-25);
+  border-color: var(--ink-200);
+  box-shadow: var(--sh-sm);
+  transform: translateY(-1px);
+}
+
+.btn-google:active {
+  transform: translateY(0);
+  box-shadow: var(--sh-xs);
+}
+
+.btn-google:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* Fine print under the button */
+.login-footnote {
+  margin-top: 18px;
+  font-size: 0.72rem;
+  color: var(--ink-400);
+  letter-spacing: -0.005em;
+}
+
+/* Error pill */
+.login-error {
+  display: none;
+  margin-top: 18px;
+  padding: 12px 16px;
+  background: rgba(214,72,91,0.08);
+  color: #a51b2f;
+  border: 1px solid rgba(214,72,91,0.22);
+  border-radius: var(--r-md);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: left;
+  letter-spacing: -0.005em;
+  animation: errorIn var(--t-default);
+}
+
+.login-error.visible { display: block; }
+
+@keyframes errorIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Bottom marquee strip ---------- */
+.login-mark {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  padding: 12px 24px calc(12px + env(safe-area-inset-bottom));
+  background: rgba(10,18,48,0.55);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-sport);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+  pointer-events: none;
+}
+
+.login-mark .hosts {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-mark .hosts::before {
+  content: "";
+  width: 28px;
+  height: 8px;
+  background: var(--host-flag-band);
+  border-radius: 2px;
+}
+
+.login-mark .count {
+  font-feature-settings: "tnum" 1;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ---------- Dark mode ---------- */
+@media (prefers-color-scheme: dark) {
+  .login-card {
+    background: #141A35;
+    color: var(--ink-1000);
+  }
+  .login-logo { color: var(--ink-1000); }
+  .login-title { color: var(--ink-700); }
+  .login-brand {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.10);
+  }
+  .login-tournament .year { color: var(--ink-1000); }
+  .login-tournament .sep  { background: rgba(255,255,255,0.20); }
+  .login-perforation {
+    background-image: linear-gradient(90deg, rgba(255,255,255,0.20) 50%, transparent 50%);
+  }
+  .login-domain-msg strong {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.10);
+    color: var(--ink-1000);
+  }
+  .btn-google {
+    background: rgba(255,255,255,0.96);
+    color: #0A1230;
+    border-color: transparent;
+  }
+  .btn-google:hover { background: #fff; }
+  .login-error {
+    background: rgba(214,72,91,0.18);
+    color: #f08a99;
+    border-color: rgba(214,72,91,0.32);
+  }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 26px 24px 26px;
+    border-radius: var(--r-md);
+  }
+  .login-perforation {
+    margin: 0 -24px 22px;
+  }
+  .login-perforation::before { left: -9px; }
+  .login-perforation::after  { right: -9px; }
+  .login-logo {
+    font-size: 3.2rem;
+  }
+  .login-tournament {
+    font-size: 1.1rem;
+    letter-spacing: 0.28em;
+  }
+  .login-tournament .year {
+    font-size: 1.2rem;
+  }
+  .login-mark {
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

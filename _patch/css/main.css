@@ -1,0 +1,816 @@
+/* ============================================================
+   Prodeteca · main.css
+   Visual language: Producteca Design System + Mundial 2026
+   ============================================================
+   Type:      DM Sans (brand face)
+   Color:     Producteca blue + violet + trophy gold
+   Radii:     pill buttons · 14px inputs · 20px cards
+   Shadows:   ink-tinted (cool, not black)
+   Motion:    fast (120) · default (220) · slow (440)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200..700;1,9..40,200..700&family=Big+Shoulders+Display:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* ---------- Brand palette (Producteca DS) ---------- */
+  --brand-blue-50:   #E6EEFB;
+  --brand-blue-100:  #BFD4F5;
+  --brand-blue-400:  #5A8BEA;
+  --brand-blue:      #0056D8;
+  --brand-blue-800:  #003FA0;
+  --brand-blue-900:  #002E77;
+
+  --brand-lilac-50:  #F4EEFA;
+  --brand-lilac-200: #E0D0F0;
+  --brand-lilac:     #B79BD9;
+  --brand-violet:    #6F5FC9;
+  --brand-violet-900:#342879;
+
+  /* ---------- Neutrals (Ink, cool-shifted) ---------- */
+  --ink-25:   #F7F8FB;
+  --ink-50:   #F2F3F7;
+  --ink-100:  #EAECF3;
+  --ink-200:  #DCDEE9;
+  --ink-400:  #8A90AE;
+  --ink-500:  #5A6285;
+  --ink-700:  #2F3758;
+  --ink-1000: #0A1230;
+
+  /* ---------- Mundial / football enrichments ---------- */
+  --trophy-gold:    #F5A623;
+  --trophy-gold-2:  #E08A0B;
+  --silver:         #B8C0CC;
+  --silver-2:       #8A93A3;
+  --bronze:         #CD7F32;
+  --bronze-2:       #94591F;
+  --pitch-green:    #1E7A4A;       /* used only as a hairline accent */
+
+  /* ---------- Mundial 2026 host colors (USA / CAN / MEX) ----------
+     Usadas como acentos festivos/torneo \u2014 nunca como semantic.
+     El semantic --color-error sigue siendo #D6485B (rosado DS). */
+  --host-usa-blue:  #002868;       /* USA flag blue */
+  --host-can-red:   #D52B1E;       /* Canada flag red */
+  --host-mex-green: #006847;       /* Mexico flag green */
+  --host-red-soft:  #FCE7EA;
+  --host-green-soft:#DAF1E5;
+  /* Three-stripe band representing the 2026 hosts, in geographic
+     order north \u2192 south: USA \u2192 Canada \u2192 Mexico. */
+  --host-flag-band: linear-gradient(90deg,
+    var(--host-usa-blue)  0%,  var(--host-usa-blue)  33%,
+    var(--host-can-red)   33%, var(--host-can-red)   66%,
+    var(--host-mex-green) 66%, var(--host-mex-green) 100%);
+
+  /* Back-compat aliases (anything that used --host-red / --host-green
+     still works \u2014 they now point to the country-correct shades). */
+  --host-red:   var(--host-can-red);
+  --host-green: var(--host-mex-green);
+  --host-white: #FFFFFF;
+
+  /* ---------- Aliases the existing JS expects ---------- */
+  --color-primary:    var(--brand-blue);
+  --color-secondary:  var(--brand-violet);
+  --color-accent:     var(--trophy-gold);
+  --color-success:    #12A66B;
+  --color-warning:    #E7A52B;
+  --color-error:      #D6485B;
+  --color-bg:         var(--ink-25);
+  --color-card:       #FFFFFF;
+  --color-text:       var(--ink-1000);
+  --color-text-muted: var(--ink-500);
+  --color-border:     var(--ink-100);
+
+  /* ---------- Radii (DS scale) ---------- */
+  --r-xs:   6px;
+  --r-sm:   10px;
+  --r-md:   14px;
+  --r-lg:   20px;
+  --r-xl:   28px;
+  --r-pill: 999px;
+  --radius: var(--r-lg);
+
+  /* ---------- Elevation (cool, ink-tinted) ---------- */
+  --sh-xs: 0 1px 2px rgba(10,18,48,0.06);
+  --sh-sm: 0 2px 6px rgba(10,18,48,0.06), 0 1px 2px rgba(10,18,48,0.04);
+  --sh-md: 0 8px 24px rgba(10,18,48,0.08), 0 2px 6px rgba(10,18,48,0.05);
+  --sh-lg: 0 24px 56px rgba(10,18,48,0.14);
+  --sh-glow-blue: 0 8px 24px rgba(0,86,216,0.22);
+  --shadow:       var(--sh-sm);
+  --shadow-hover: var(--sh-md);
+
+  /* ---------- Motion ---------- */
+  --t-fast:    120ms cubic-bezier(.2,.7,.3,1);
+  --t-default: 220ms cubic-bezier(.2,.7,.3,1);
+  --t-slow:    440ms cubic-bezier(.2,.7,.3,1);
+  --transition: var(--t-default);
+
+  /* ---------- Type ---------- */
+  --font-body:    "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "DM Sans", system-ui, sans-serif;
+  --font-sport:   "Big Shoulders Display", "DM Sans", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* ---------- Signature gradients ---------- */
+  --grad-aurora: radial-gradient(120% 90% at 18% 40%, #FFFFFF 0%, #CFD9FF 18%, #5A7BF1 48%, #0056D8 72%, #5b3aa8 100%);
+  --grad-aurora-soft: linear-gradient(135deg, #E6EEFB 0%, #F4EEFA 60%, #FFFFFF 100%);
+  --grad-blue-solid: radial-gradient(120% 90% at 30% 30%, #5A8BEA 0%, #0056D8 55%, #002E77 100%);
+
+  /* Grain texture (DS signature) */
+  --grain-svg: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* ============================================================
+   Dark mode (cool, ink-shifted — never pure black)
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:         #0B1024;
+    --color-card:       #141A35;
+    --color-text:       #E8ECF7;
+    --color-text-muted: #8E96B5;
+    --color-border:     #232A4A;
+
+    --ink-25:   #0B1024;
+    --ink-50:   #101630;
+    --ink-100:  #232A4A;
+    --ink-200:  #2C3458;
+    --ink-400:  #6B7396;
+    --ink-500:  #8E96B5;
+    --ink-700:  #C7CCE0;
+    --ink-1000: #E8ECF7;
+
+    --sh-xs: 0 1px 2px rgba(0,0,0,0.4);
+    --sh-sm: 0 2px 6px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.25);
+    --sh-md: 0 8px 24px rgba(0,0,0,0.45);
+    --sh-lg: 0 24px 56px rgba(0,0,0,0.55);
+    --sh-glow-blue: 0 8px 24px rgba(90,139,234,0.28);
+    --shadow:       var(--sh-sm);
+    --shadow-hover: var(--sh-md);
+  }
+}
+
+/* ============================================================
+   Reset + base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  min-height: 100vh;
+  letter-spacing: -0.005em;
+}
+
+a {
+  color: var(--brand-blue);
+  text-decoration: none;
+  transition: color var(--t-fast);
+}
+a:hover { color: var(--brand-blue-800); }
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  color: inherit;
+}
+
+input, select, button, textarea {
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+::selection { background: var(--brand-blue); color: #fff; }
+
+/* Tabular score / numeric typography */
+.num,
+.num input,
+input[type="number"].num,
+.match-score-area input,
+.score-input,
+.rank-pos,
+.rank-pts,
+.profile-pts,
+.nav-points {
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* ============================================================
+   Layout
+   ============================================================ */
+.page-container {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 20px 96px;
+}
+
+@media (min-width: 769px) {
+  .page-container { padding: 28px 28px 72px; }
+}
+
+/* ============================================================
+   Top nav (desktop)
+   ============================================================ */
+.top-nav {
+  background: rgba(255,255,255,0.85);
+  -webkit-backdrop-filter: saturate(140%) blur(16px);
+  backdrop-filter:         saturate(140%) blur(16px);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+@media (prefers-color-scheme: dark) {
+  .top-nav { background: rgba(11,16,36,0.78); }
+}
+
+.top-nav-inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-logo {
+  font-family: var(--font-sport);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--ink-1000);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  text-decoration: none;
+  position: relative;
+}
+
+/* Brand mark */
+.nav-logo::before {
+  content: "";
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  margin-right: 10px;
+  background: url("/producteca-mark.svg") center/contain no-repeat;
+  border-radius: 7px;
+}
+
+/* Dot after BOTH words — matches the login wordmark (PRODE·TECA·) */
+.nav-logo .word::after {
+  content: "·";
+  color: var(--brand-blue);
+  margin-left: 0.05em;
+}
+
+.nav-logo .word.alt {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--brand-blue);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
+  background: var(--ink-50);
+  padding: 4px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--color-border);
+}
+
+.nav-tab {
+  padding: 8px 16px;
+  border-radius: var(--r-pill);
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--ink-500);
+  background: none;
+  border: none;
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  transition: color var(--t-fast), background var(--t-fast);
+  white-space: nowrap;
+}
+
+.nav-tab:hover { color: var(--ink-1000); background: rgba(255,255,255,0.6); }
+
+.nav-tab.active {
+  background: var(--color-card);
+  color: var(--brand-blue);
+  box-shadow: var(--sh-xs);
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+}
+
+.nav-points {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-1000);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-points::before {
+  content: "";
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--trophy-gold) 0%, var(--trophy-gold-2) 100%);
+  box-shadow: inset 0 0 0 1.5px rgba(255,255,255,0.7);
+}
+
+.nav-avatar,
+.nav-avatar-placeholder {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+.nav-avatar { object-fit: cover; border: 2px solid var(--color-border); }
+
+.nav-avatar-placeholder {
+  background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-violet) 100%);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 0.8rem;
+  letter-spacing: 0.02em;
+}
+
+.nav-avatar:hover,
+.nav-avatar-placeholder:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--sh-sm);
+}
+
+/* Dropdown */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-md);
+  min-width: 180px;
+  z-index: 200;
+  overflow: hidden;
+  display: none;
+  padding: 4px;
+}
+
+.dropdown-menu.open {
+  display: block;
+  animation: dropdownIn var(--t-default);
+}
+
+@keyframes dropdownIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 14px;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  border-radius: var(--r-sm);
+  transition: background var(--t-fast);
+}
+
+.dropdown-item:hover { background: var(--ink-50); }
+
+/* Bottom tabs (hidden on desktop) */
+.bottom-tabs { display: none; }
+
+/* ============================================================
+   Page header — with the signature halfway line
+   ============================================================ */
+.page-header {
+  padding: 32px 0 20px;
+  position: relative;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.25rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--ink-1000);
+  line-height: 1.1;
+}
+
+.page-title em,
+.page-title .accent {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--brand-blue);
+}
+
+.page-eyebrow {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-500);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.page-eyebrow::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--brand-lilac);
+}
+
+/* Halfway line under the header — subtle football reference */
+.page-header::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-border) 12%,
+    var(--color-border) 88%,
+    transparent 100%
+  );
+}
+
+/* ============================================================
+   Cards (generic)
+   ============================================================ */
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  box-shadow: var(--sh-xs);
+  transition: box-shadow var(--t-default), border-color var(--t-default), transform var(--t-default);
+}
+
+.card:hover {
+  box-shadow: var(--sh-sm);
+  border-color: var(--ink-200);
+}
+
+/* ============================================================
+   Buttons (pill, DS)
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: -0.005em;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform var(--t-fast), box-shadow var(--t-default), background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+  min-height: 44px;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: var(--brand-blue);
+  color: #fff;
+  box-shadow: var(--sh-glow-blue);
+}
+
+.btn-primary:hover {
+  background: var(--brand-blue-800);
+  box-shadow: 0 10px 28px rgba(0,86,216,0.32);
+}
+
+.btn-secondary {
+  background: var(--ink-1000);
+  color: #fff;
+}
+
+.btn-secondary:hover { background: #1a234a; }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-1000);
+  border-color: var(--color-border);
+}
+
+.btn-ghost:hover {
+  background: var(--ink-50);
+  border-color: var(--ink-200);
+}
+
+.btn-saved {
+  background: var(--color-success);
+  color: #fff;
+  border-color: transparent;
+}
+
+.btn-saved:hover {
+  filter: brightness(0.9);
+}
+
+.btn-sm {
+  padding: 7px 14px;
+  font-size: 0.8rem;
+  min-height: 34px;
+}
+
+.btn-lg {
+  padding: 14px 28px;
+  font-size: 0.95rem;
+  min-height: 52px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* ============================================================
+   Score inputs
+   ============================================================ */
+.score-input {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 500;
+  width: 64px;
+  height: 64px;
+  text-align: center;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--r-md);
+  background: var(--color-card);
+  color: var(--ink-1000);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast), background var(--t-fast);
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.02em;
+  -moz-appearance: textfield;
+}
+
+.score-input::-webkit-outer-spin-button,
+.score-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.score-input::placeholder {
+  color: var(--ink-200);
+  font-weight: 400;
+}
+
+.score-input:hover:not(:disabled) {
+  border-color: var(--ink-200);
+}
+
+.score-input:focus {
+  outline: none;
+  border-color: var(--brand-blue);
+  box-shadow: 0 0 0 4px rgba(0,86,216,0.14);
+  background: var(--color-card);
+}
+
+.score-input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  background: var(--ink-50);
+  color: var(--ink-500);
+  border-color: var(--color-border);
+}
+
+/* When a prediction is exact / partial / miss, score input adopts that tone */
+.match-card.exact   .score-input { border-color: rgba(18,166,107,0.45); color: var(--color-success); }
+.match-card.partial .score-input { border-color: rgba(231,165,43,0.45); color: var(--color-warning); }
+.match-card.miss    .score-input { border-color: rgba(214,72,91,0.35); color: var(--ink-500); }
+
+/* ============================================================
+   Toast
+   ============================================================ */
+#toast-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  /* Fixed dark navy — never flips in dark mode */
+  background: #1B2245;
+  color: #fff;
+  padding: 12px 18px 12px 14px;
+  border-radius: var(--r-pill);
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--sh-md);
+  animation: toastIn var(--t-default);
+  max-width: 360px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.005em;
+}
+
+.toast::before {
+  content: "";
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+.toast.success { background: var(--color-success); color: #fff; }
+.toast.error   { background: var(--color-error);   color: #fff; }
+/* Yellow bg needs dark text for legibility */
+.toast.warning { background: var(--color-warning); color: #3d2400; }
+
+@keyframes toastIn {
+  from { transform: translateX(120%) scale(0.96); opacity: 0; }
+  to   { transform: translateX(0)    scale(1);    opacity: 1; }
+}
+
+/* ============================================================
+   Skeletons (shimmer)
+   ============================================================ */
+.skeleton {
+  background: linear-gradient(90deg, var(--ink-50) 0%, var(--ink-100) 40%, var(--ink-50) 80%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: var(--r-sm);
+  color: transparent;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ============================================================
+   Modal
+   ============================================================ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,18,48,0.55);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: overlayIn var(--t-default);
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-xl);
+  padding: 28px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 82vh;
+  overflow-y: auto;
+  box-shadow: var(--sh-lg);
+  animation: modalIn var(--t-default);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.985); }
+  to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.modal-header h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+  color: var(--ink-1000);
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--ink-500);
+  padding: 6px;
+  border-radius: var(--r-sm);
+  line-height: 1;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.modal-close:hover { background: var(--ink-50); color: var(--ink-1000); }
+
+/* ============================================================
+   Empty state
+   ============================================================ */
+.empty-state {
+  text-align: center;
+  padding: 64px 20px;
+  color: var(--ink-500);
+}
+
+.empty-state p {
+  margin-top: 6px;
+  font-size: 0.95rem;
+  letter-spacing: -0.005em;
+}
+
+/* ============================================================
+   Badges (DS)
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border-radius: var(--r-pill);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid transparent;
+  line-height: 1.4;
+}
+
+.badge::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.85;
+}
+
+.badge-success { background: rgba(18,166,107,0.10);  color: #0e7d50; border-color: rgba(18,166,107,0.18); }
+.badge-warning { background: rgba(231,165,43,0.12);  color: #8a5a00;  border-color: rgba(231,165,43,0.22); }
+.badge-error   { background: rgba(214,72,91,0.10);   color: #a51b2f;  border-color: rgba(214,72,91,0.20); }
+.badge-locked  { background: var(--ink-50);          color: var(--ink-500);  border-color: var(--color-border); }
+.badge-muted   { background: var(--ink-50);          color: var(--ink-500);  border-color: var(--color-border); }
+.badge-blue    { background: rgba(0,86,216,0.08);    color: var(--brand-blue); border-color: rgba(0,86,216,0.16); }
+.badge-lilac   { background: var(--brand-lilac-50);  color: var(--brand-violet-900); border-color: var(--brand-lilac-200); }
+
+@media (prefers-color-scheme: dark) {
+  .badge-success { background: rgba(18,166,107,0.16); color: #4fd29a; border-color: rgba(18,166,107,0.30); }
+  .badge-warning { background: rgba(231,165,43,0.16); color: #f5c069; border-color: rgba(231,165,43,0.30); }
+  .badge-error   { background: rgba(214,72,91,0.18);  color: #f08a99; border-color: rgba(214,72,91,0.32); }
+  .badge-blue    { background: rgba(0,86,216,0.20);   color: #93b6f0; border-color: rgba(0,86,216,0.38); }
+  .badge-lilac   { background: rgba(183,155,217,0.18); color: #d4c1ec; border-color: rgba(183,155,217,0.32); }
+}

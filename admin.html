@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prodeteca — Panel Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/components.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+</head>
+<body>
+  <div id="nav-container"></div>
+
+  <div class="page-container">
+    <div class="page-header">
+      <h1 class="page-title">Panel Admin</h1>
+    </div>
+
+    <div class="admin-section">
+      <h3>⚽ Cargar resultado de partido</h3>
+      <div id="results-section"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>👥 Gestión de usuarios</h3>
+      <div id="users-section"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>🔁 Recalcular resultado de partido terminado</h3>
+      <div id="recalculate-section"></div>
+    </div>
+
+    <div class="admin-section">
+      <h3>📅 Importar fixture (.ics)</h3>
+      <div id="fixture-section"></div>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <script type="module" src="/js/admin.js"></script>
+</body>
+</html>

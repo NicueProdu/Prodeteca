@@ -1,0 +1,473 @@
+/* ============================================================
+   Prodeteca · responsive.css
+   Mobile-first. Bottom tab bar < 768px.
+   ============================================================ */
+
+/* ===== Bottom tab bar (mobile) ===== */
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+
+  /* Hide desktop pill tabs */
+  .nav-tabs { display: none; }
+
+  /* Show mobile bottom bar */
+  .bottom-tabs {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    background: rgba(255,255,255,0.92);
+    -webkit-backdrop-filter: saturate(160%) blur(18px);
+    backdrop-filter:         saturate(160%) blur(18px);
+    border-top: 1px solid var(--color-border);
+    z-index: 100;
+    box-shadow: 0 -8px 24px rgba(10,18,48,0.06);
+    gap: 4px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .bottom-tabs {
+      background: rgba(11,16,36,0.85);
+    }
+  }
+
+  .bottom-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 8px 4px;
+    min-height: 56px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink-500);
+    text-decoration: none;
+    transition: color var(--t-fast), background var(--t-fast);
+    border: none;
+    background: none;
+    cursor: pointer;
+    border-radius: var(--r-md);
+    position: relative;
+  }
+
+  .bottom-tab svg,
+  .bottom-tab .tab-icon {
+    font-size: 1.2rem;
+    width: 22px;
+    height: 22px;
+  }
+
+  .bottom-tab:active {
+    background: var(--ink-50);
+  }
+
+  .bottom-tab.active {
+    color: var(--brand-blue);
+  }
+
+  /* Active indicator dot under the icon */
+  .bottom-tab.active::before {
+    content: "";
+    position: absolute;
+    top: 6px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--brand-blue);
+    box-shadow: 0 0 0 3px rgba(0,86,216,0.18);
+  }
+
+  /* Page container needs room for the bottom bar */
+  .page-container {
+    padding-bottom: 96px;
+  }
+
+  /* ===== Mobile top bar — logo left · points + avatar pinned right =====
+     Desktop centred the tabs with flex:1; once they're hidden the avatar
+     would drift to the middle, so we force a clean space-between bar. */
+  .top-nav-inner {
+    height: 56px;
+    padding: 0 16px;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-size: 1.05rem;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .nav-user {
+    margin-left: auto;   /* keep avatar + points hard against the right edge */
+    gap: 10px;
+  }
+
+  /* Keep the points reachable on mobile (just more compact) */
+  .nav-points {
+    font-size: 0.82rem;
+  }
+  .nav-points::before { width: 12px; height: 12px; }
+
+  /* ===== Page header ===== */
+  .page-header {
+    padding: 24px 0 16px;
+  }
+
+  .page-title {
+    font-size: 1.6rem;
+  }
+
+  /* ===== Match card adjustments ===== */
+  .match-card {
+    padding: 16px 16px 14px;
+  }
+
+  .match-card::before {
+    /* Smaller arcs on mobile */
+    background:
+      radial-gradient(circle at 100% 50%, transparent 50px, rgba(10,18,48,0.025) 50px 51px, transparent 52px),
+      radial-gradient(circle at 0%   50%, transparent 50px, rgba(10,18,48,0.025) 50px 51px, transparent 52px);
+  }
+
+  /* 2-row layout: teams side by side on top, score full-width below */
+  .match-teams {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px 8px;
+  }
+
+  .match-score-area {
+    grid-column: 1 / -1;
+    padding: 8px 12px;
+    gap: 8px;
+  }
+
+  .team {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  /* Left team: flag on the right, name on the left */
+  .team:first-child {
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+  }
+
+  /* Re-align left-team name to the left (overrides the desktop text-align:right) */
+  .team:first-child .team-name {
+    text-align: left;
+  }
+
+  .team-flag {
+    width: 36px;
+    height: 26px;
+    border-radius: 4px;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+  }
+
+  .team-flag .flag-slot em { font-size: 0.42rem; }
+  .team-flag .flag-slot b  { font-size: 0.72rem; }
+
+  .team-name {
+    font-size: 0.78rem;
+    max-width: none;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .score-input {
+    width: 54px;
+    height: 54px;
+    font-size: 1.5rem;
+  }
+
+  .score-sep {
+    font-size: 1.3rem;
+  }
+
+  .match-meta {
+    margin-bottom: 12px;
+  }
+
+  .match-phase {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
+  .match-time {
+    font-size: 0.74rem;
+  }
+
+  .match-footer {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ===== Ranking ===== */
+  .ranking-table .hide-mobile { display: none; }
+
+  .ranking-table thead th,
+  .ranking-table tbody td {
+    padding: 12px 10px;
+  }
+
+  .rank-pos {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+    padding: 0 8px;
+  }
+
+  .rank-avatar,
+  .rank-avatar-placeholder {
+    width: 32px;
+    height: 32px;
+  }
+
+  .rank-user {
+    gap: 8px;
+    font-size: 0.88rem;
+  }
+
+  .rank-pts {
+    font-size: 1.05rem;
+  }
+
+  /* ===== Champion card ===== */
+  .champion-card {
+    padding: 22px 20px 20px;
+  }
+
+  .champion-card::after {
+    width: 140px;
+    height: 140px;
+    right: -30px;
+    opacity: 0.08;
+  }
+
+  .champion-selects {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .champion-card .btn-primary {
+    align-self: stretch;
+    width: 100%;
+  }
+
+  /* ===== Profile ===== */
+  .profile-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 22px;
+    gap: 14px;
+  }
+  .profile-avatar-wrap { margin: 0 auto; }
+  .profile-stat-strip {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px 0;
+  }
+  .profile-stat-strip .stat-cell:nth-child(3)::before { display: none; }
+
+  .profile-name {
+    justify-content: center;
+  }
+
+  .profile-pts {
+    text-align: center;
+  }
+
+  /* ===== Filter bar — horizontal scroll on mobile ===== */
+  .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    /* Subtle fade on the right edge to hint scrollability */
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
+            mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 24px), transparent 100%);
+  }
+
+  .filter-bar::-webkit-scrollbar { display: none; }
+
+  .filter-btn,
+  .filter-select,
+  input[type="date"].filter-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    min-height: 38px;
+  }
+
+  /* ===== Admin sections ===== */
+  .admin-section {
+    padding: 18px;
+  }
+
+  /* Result form: allow buttons to wrap onto a new row on narrow screens */
+  .result-form {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* ===== Modal — sheet on mobile ===== */
+  .modal-overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    max-height: 92vh;
+    padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+    animation: sheetIn var(--t-slow);
+  }
+
+  @keyframes sheetIn {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Toast positioning */
+  #toast-container {
+    top: auto;
+    bottom: calc(80px + env(safe-area-inset-bottom));
+    right: 16px;
+    left: 16px;
+  }
+
+  .toast {
+    max-width: none;
+  }
+}
+
+/* ===== Very small screens ===== */
+@media (max-width: 480px) {
+  .page-container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Keep the edge-to-edge filter bar aligned with the 16px page gutter
+     so it never pokes past the viewport. */
+  .filter-bar {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  /* Ranking section header: hide the stat block, make it fit */
+  .ranking-section-header {
+    gap: 12px;
+    padding: 18px 18px;
+  }
+  .ranking-section-header .trophy {
+    width: 48px;
+    height: 48px;
+  }
+  .ranking-section-header .stat { display: none; }
+  .ranking-section-header .text h2 { font-size: 1.35rem; }
+
+  .match-teams {
+    gap: 8px 6px;
+  }
+
+  .team-flag {
+    width: 30px;
+    height: 22px;
+    border-radius: 3px;
+    font-size: 1.1rem;
+  }
+
+  .team-flag .flag-slot em { font-size: 0.38rem; }
+  .team-flag .flag-slot b  { font-size: 0.62rem; }
+
+  .team-name {
+    font-size: 0.72rem;
+  }
+
+  .score-input {
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
+  }
+
+  .match-score-area {
+    padding: 3px 4px;
+  }
+
+  .score-sep {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .page-title {
+    font-size: 1.4rem;
+  }
+
+  .profile-pts {
+    font-size: 2rem;
+  }
+
+  .profile-avatar,
+  .profile-avatar-placeholder {
+    width: 76px;
+    height: 76px;
+  }
+
+  .profile-avatar-placeholder {
+    font-size: 1.55rem;
+  }
+}
+
+/* ===== Large screens — keep cards from getting too wide ===== */
+@media (min-width: 1100px) {
+  .match-card {
+    padding: 22px 24px 20px;
+  }
+
+  .match-teams {
+    gap: 20px;
+  }
+
+  .team-flag {
+    width: 52px;
+    height: 38px;
+    border-radius: 6px;
+    font-size: 2rem;
+  }
+
+  .team-name {
+    font-size: 0.85rem;
+    max-width: 200px;
+  }
+}
+
+/* ===== Reduce motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
