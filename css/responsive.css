@@ -7,8 +7,8 @@
 @media (max-width: 768px) {
   body { overflow-x: hidden; }
 
-  /* Hide desktop pill tabs */
-  .nav-tabs { display: none; }
+  /* Tabs go to a second row */
+  .nav-tabs { display: flex; justify-content: center; width: 100%; }
 
   /* Show mobile bottom bar */
   .bottom-tabs {
@@ -91,10 +91,11 @@
      Desktop centred the tabs with flex:1; once they're hidden the avatar
      would drift to the middle, so we force a clean space-between bar. */
   .top-nav-inner {
-    height: 56px;
-    padding: 0 16px;
-    gap: 12px;
+    height: auto;
+    padding: 10px 16px 8px;
+    gap: 8px;
     justify-content: space-between;
+    flex-wrap: wrap;
   }
 
   .nav-logo {
@@ -135,16 +136,14 @@
       radial-gradient(circle at 0%   50%, transparent 50px, rgba(10,18,48,0.025) 50px 51px, transparent 52px);
   }
 
-  /* 2-row layout: teams side by side on top, score full-width below */
   .match-teams {
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 8px;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 8px;
   }
 
   .match-score-area {
-    grid-column: 1 / -1;
-    padding: 8px 12px;
-    gap: 8px;
+    padding: 8px 6px;
+    gap: 6px;
   }
 
   .team {
@@ -355,6 +354,22 @@
 
   .toast {
     max-width: none;
+  }
+}
+
+/* ===== Tablet / medium screens — tabs fit but need to be compact ===== */
+@media (min-width: 769px) and (max-width: 920px) {
+  .nav-tab {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .top-nav-inner {
+    gap: 12px;
+  }
+
+  .nav-points {
+    font-size: 0.8rem;
   }
 }
 
