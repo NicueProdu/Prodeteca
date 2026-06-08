@@ -5,12 +5,16 @@
 
 /* ===== Bottom tab bar (mobile) ===== */
 @media (max-width: 768px) {
-  body { overflow-x: hidden; }
+  /* `clip` (en vez de `hidden`) recorta el desborde horizontal SIN crear un
+     contenedor de scroll en el body. `overflow-x: hidden` rompía el
+     `position: sticky` del nav (por eso no se congelaba SOLO en mobile);
+     `clip` evita ese efecto y deja que el sticky funcione como en desktop. */
+  body { overflow-x: clip; }
 
-  /* `#nav-container` envuelve al nav y mide exactamente su alto, lo que
-     confinaba el `position: sticky` (sin recorrido → no se congelaba).
-     `display: contents` disuelve esa caja: el nav pasa a colgar del body,
-     que sí es alto, y entonces las dos filas quedan frozen al scrollear. */
+  /* 2ª causa (independiente del overflow): `#nav-container` envuelve al nav
+     y mide exactamente su alto, confinando el `position: sticky` (sin
+     recorrido → no se congela). `display: contents` disuelve esa caja para
+     que el nav cuelgue del body. Hacen falta AMBOS fixes a la vez. */
   #nav-container { display: contents; }
 
   /* Nav superior OPACO y congelado (sticky) en mobile.
