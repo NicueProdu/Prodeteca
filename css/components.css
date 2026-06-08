@@ -3383,3 +3383,181 @@ input[type="date"].filter-btn {
   border-color: var(--brand-blue);
   box-shadow: 0 0 0 4px rgba(0,86,216,0.14);
 }
+
+/* ============================================================
+   RANKING POR ÁREA
+   ============================================================ */
+
+.area-ranking-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 16px;
+}
+
+.area-card {
+  background: var(--color-card);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--sh-sm);
+  border: 1px solid var(--color-border);
+}
+
+.area-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 16px;
+  background: linear-gradient(135deg, #0056d8 0%, #1a3fa0 100%);
+  color: #fff;
+  gap: 8px;
+}
+
+.area-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  display: block;
+}
+
+.area-member-count {
+  font-size: 0.72rem;
+  opacity: 0.75;
+  display: block;
+  margin-top: 2px;
+}
+
+.area-total-block {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.area-total-pts {
+  font-size: 1.5rem;
+  font-weight: 800;
+  display: block;
+  line-height: 1;
+}
+
+.area-total-label {
+  font-size: 0.68rem;
+  opacity: 0.75;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Desplegable nativo */
+.area-details {
+  border-top: 1px solid var(--color-border);
+}
+
+.area-details-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background 0.12s, color 0.12s;
+}
+
+.area-details-summary::-webkit-details-marker { display: none; }
+
+.area-details-summary:hover {
+  background: rgba(0,0,0,0.03);
+  color: var(--color-text);
+}
+
+.area-chevron {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.area-details[open] .area-chevron {
+  transform: rotate(180deg);
+}
+
+.area-details[open] .area-details-summary {
+  color: var(--color-text);
+}
+
+/* Lista de miembros */
+.area-members {
+  padding: 4px 0 6px;
+  border-top: 1px solid var(--color-border);
+}
+
+.area-empty {
+  padding: 18px 16px;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.area-member-row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 6px 14px;
+  transition: background 0.12s;
+}
+
+.area-member-row:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.area-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.area-avatar-placeholder {
+  background: var(--brand-blue, #0056d8);
+  color: #fff;
+  font-size: 0.62rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.area-member-name {
+  flex: 1;
+  font-size: 0.85rem;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text);
+}
+
+.area-member-name.me {
+  font-weight: 700;
+  color: var(--brand-blue, #0056d8);
+}
+
+.area-member-pts {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+/* Dot de actividad */
+.area-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.area-status-dot.active   { background: #22c55e; }
+.area-status-dot.inactive { background: var(--color-border); }

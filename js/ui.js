@@ -60,6 +60,7 @@ export function renderNav(activePage, user) {
   const pages = [
     { href: '/predictions', label: 'Predicciones', key: 'predictions' },
     { href: '/ranking', label: 'Ranking', key: 'ranking' },
+    { href: '/ranking-area', label: 'Áreas', key: 'ranking-area' },
     { href: '/matches', label: 'Partidos', key: 'matches' },
   ]
 
@@ -68,10 +69,11 @@ export function renderNav(activePage, user) {
   ).join('')
 
   const bottomPages = [
-    { href: '/predictions', label: 'Predicciones', key: 'predictions', icon: '⚽' },
-    { href: '/ranking',     label: 'Ranking',       key: 'ranking',     icon: '🏆' },
-    { href: '/matches',     label: 'Partidos',      key: 'matches',     icon: '📅' },
-    { href: '/profile',     label: 'Perfil',        key: 'profile',     icon: '👤' },
+    { href: '/predictions',  label: 'Predecir', key: 'predictions',  icon: '⚽' },
+    { href: '/ranking',      label: 'Ranking',  key: 'ranking',      icon: '🏆' },
+    { href: '/ranking-area', label: 'Áreas',    key: 'ranking-area', icon: '🗂️' },
+    { href: '/matches',      label: 'Partidos', key: 'matches',      icon: '📅' },
+    { href: '/profile',      label: 'Perfil',   key: 'profile',      icon: '👤' },
   ]
 
   const bottomTabsHtml = bottomPages.map(p =>
