@@ -276,6 +276,11 @@ async function recalculateResult(matchId) {
   card?.querySelector(`[data-open-recap="${matchId}"]`)?.style.setProperty('display', 'inline-flex')
 }
 
+const AREAS = [
+  'Implementacion', 'Administracion/Comercial', 'Desarrollo',
+  'Producto', 'Soporte', 'Customer Success',
+]
+
 async function renderUsersSection() {
   const container = document.getElementById('users-section')
   if (!container) return
@@ -292,12 +297,22 @@ async function renderUsersSection() {
   const ROW_HEIGHT = 44
   const INITIAL_VISIBLE = 5
 
+  const areaOptions = `<option value="">Sin área</option>` +
+    AREAS.map(a => `<option value="${a}">${a}</option>`).join('')
+
   const rows = users.map(u => `
     <tr class="user-row">
       <td style="padding:10px">${u.name || '—'}</td>
       <td style="padding:10px;font-size:0.85rem">${u.email}</td>
       <td style="padding:10px">
         <span class="badge ${u.role === 'admin' ? 'badge-success' : 'badge-muted'}">${u.role}</span>
+      </td>
+      <td style="padding:10px">
+        <select class="area-select" data-user-id="${u.id}"
+          style="padding:4px 8px;border:1px solid var(--color-border);border-radius:6px;
+                 background:var(--color-bg);color:var(--color-text);font-size:0.8rem;cursor:pointer">
+          ${areaOptions}
+        </select>
       </td>
       <td style="padding:10px">
         ${u.id !== currentUser.id
@@ -320,12 +335,13 @@ async function renderUsersSection() {
       <div id="users-scroll"
         style="max-height:${INITIAL_VISIBLE * ROW_HEIGHT}px;overflow-y:auto;overflow-x:auto;transition:max-height 0.3s ease">
         <table id="users-table"
-          style="width:100%;border-collapse:collapse;font-size:0.9rem;min-width:480px">
+          style="width:100%;border-collapse:collapse;font-size:0.9rem;min-width:580px">
           <thead style="position:sticky;top:0;z-index:1;background:var(--color-card)">
             <tr style="font-size:0.75rem;color:var(--color-text-muted);border-bottom:2px solid var(--color-border)">
               <th style="padding:10px;text-align:left">Nombre</th>
               <th style="padding:10px;text-align:left">Email</th>
               <th style="padding:10px;text-align:left">Rol</th>
+              <th style="padding:10px;text-align:left">Área</th>
               <th style="padding:10px"></th>
             </tr>
           </thead>
@@ -333,6 +349,12 @@ async function renderUsersSection() {
         </table>
       </div>
     </div>`
+
+  // Setear valores actuales de área en cada select
+  users.forEach(u => {
+    const sel = container.querySelector(`.area-select[data-user-id="${u.id}"]`)
+    if (sel && u.area) sel.value = u.area
+  })
 
   document.getElementById('user-search').addEventListener('input', (e) => {
     const q = e.target.value.toLowerCase().trim()
@@ -347,6 +369,27 @@ async function renderUsersSection() {
   container.querySelectorAll('[data-toggle-admin]').forEach(btn => {
     btn.addEventListener('click', () => toggleAdmin(btn.dataset.toggleAdmin, btn.dataset.currentRole, btn))
   })
+
+  container.querySelectorAll('.area-select').forEach(sel => {
+    sel.addEventListener('change', () => saveArea(sel.dataset.userId, sel.value, sel))
+  })
+}
+
+async function saveArea(userId, area, selectEl) {
+  selectEl.disabled = true
+
+  const { error } = await supabase
+    .from('users')
+    .update({ area: area || null })
+    .eq('id', userId)
+
+  selectEl.disabled = false
+
+  if (error) {
+    showToast('Error actualizando área', 'error')
+    return
+  }
+  showToast('Área actualizada', 'success')
 }
 
 async function toggleAdmin(userId, currentRole, btn) {
