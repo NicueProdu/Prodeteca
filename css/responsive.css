@@ -7,8 +7,29 @@
 @media (max-width: 768px) {
   body { overflow-x: hidden; }
 
-  /* Tabs go to a second row */
-  .nav-tabs { display: flex; justify-content: center; width: 100%; }
+  /* Top nav en mobile = dos niveles:
+     Fila 1 → logo + puntos/avatar.  Fila 2 → las 4 tabs.
+     `order: 3` baja las tabs debajo de nav-user; `flex: 0 0 100%` evita
+     el conflicto con el `flex: 1` heredado del desktop (que dejaba el
+     bloque de avatar/puntos flotando sobre la primera card). */
+  .nav-tabs {
+    order: 3;
+    flex: 0 0 100%;
+    width: 100%;
+    margin-top: 2px;
+  }
+
+  /* Las 4 tabs se reparten el ancho en partes iguales, SIN scroll */
+  .nav-tab {
+    flex: 1 1 0;
+    min-width: 0;
+    text-align: center;
+    padding: 8px 3px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 
   /* Show mobile bottom bar */
   .bottom-tabs {
