@@ -7,8 +7,19 @@
 @media (max-width: 768px) {
   body { overflow-x: hidden; }
 
-  /* Tabs go to a second row */
-  .nav-tabs { display: flex; justify-content: center; width: 100%; }
+  /* Tabs go to a full second row — logo + avatar stay on row 1.
+     `order: 3` los manda después de nav-user, y `flex: 0 0 100%` evita
+     el conflicto con el `flex: 1` heredado del desktop (que dejaba el
+     bloque de avatar/puntos flotando sobre la primera card). */
+  .nav-tabs {
+    display: flex;
+    justify-content: center;
+    order: 3;
+    flex: 0 0 100%;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 
   /* Show mobile bottom bar */
   .bottom-tabs {
