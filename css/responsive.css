@@ -7,6 +7,25 @@
 @media (max-width: 768px) {
   body { overflow-x: hidden; }
 
+  /* `#nav-container` envuelve al nav y mide exactamente su alto, lo que
+     confinaba el `position: sticky` (sin recorrido → no se congelaba).
+     `display: contents` disuelve esa caja: el nav pasa a colgar del body,
+     que sí es alto, y entonces las dos filas quedan frozen al scrollear. */
+  #nav-container { display: contents; }
+
+  /* Nav superior OPACO y congelado (sticky) en mobile.
+     Sin esto el fondo translúcido dejaba ver las cards "a través" del nav
+     al scrollear, leyéndose como superposición. Opaco = el contenido
+     desaparece limpio detrás de las dos filas (perfil + tabs). */
+  .top-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-card);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   /* Top nav en mobile = dos niveles:
      Fila 1 → logo + puntos/avatar.  Fila 2 → las 4 tabs.
      `order: 3` baja las tabs debajo de nav-user; `flex: 0 0 100%` evita
@@ -17,15 +36,20 @@
     flex: 0 0 100%;
     width: 100%;
     margin-top: 2px;
+    padding: 3px;
+    gap: 1px;
   }
 
-  /* Las 4 tabs se reparten el ancho en partes iguales, SIN scroll */
+  /* Las 4 tabs se reparten el ancho en partes iguales, SIN scroll.
+     Letra chica + padding mínimo para que "Predicciones" / "Partidos"
+     entren completas sin truncarse. */
   .nav-tab {
     flex: 1 1 0;
     min-width: 0;
     text-align: center;
-    padding: 8px 3px;
-    font-size: 0.72rem;
+    padding: 7px 2px;
+    font-size: 0.66rem;
+    letter-spacing: -0.01em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
