@@ -5,25 +5,17 @@
 
 /* ===== Bottom tab bar (mobile) ===== */
 @media (max-width: 768px) {
-  /* `clip` (en vez de `hidden`) recorta el desborde horizontal SIN crear un
-     contenedor de scroll en el body. `overflow-x: hidden` rompía el
-     `position: sticky` del nav (por eso no se congelaba SOLO en mobile);
-     `clip` evita ese efecto y deja que el sticky funcione como en desktop. */
   body { overflow-x: clip; }
 
-  /* 2ª causa (independiente del overflow): `#nav-container` envuelve al nav
-     y mide exactamente su alto, confinando el `position: sticky` (sin
-     recorrido → no se congela). `display: contents` disuelve esa caja para
-     que el nav cuelgue del body. Hacen falta AMBOS fixes a la vez. */
-  #nav-container { display: contents; }
-
-  /* Nav superior OPACO y congelado (sticky) en mobile.
-     Sin esto el fondo translúcido dejaba ver las cards "a través" del nav
-     al scrollear, leyéndose como superposición. Opaco = el contenido
-     desaparece limpio detrás de las dos filas (perfil + tabs). */
+  /* Nav FIJO y opaco en mobile (plan determinista, no depende de sticky).
+     `position: fixed` lo congela siempre arriba; el `padding-top` de
+     `.page-container` (más abajo) empuja el contenido para que nunca quede
+     debajo del nav. Opaco = lo que scrollea pasa limpio por detrás. */
   .top-nav {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     z-index: 100;
     background: var(--color-card);
     -webkit-backdrop-filter: none;
@@ -132,7 +124,10 @@
   }
 
   /* Page container needs room for the bottom bar */
+  /* Deja lugar para el nav FIJO de dos filas (~104px) + respiro.
+     Sin esto el contenido (filtros, primera card) quedaría debajo del nav. */
   .page-container {
+    padding-top: 116px;
     padding-bottom: 96px;
   }
 
@@ -141,7 +136,7 @@
      would drift to the middle, so we force a clean space-between bar. */
   .top-nav-inner {
     height: auto;
-    padding: 10px 16px 8px;
+    padding: 10px 12px 8px;
     gap: 8px;
     justify-content: space-between;
     flex-wrap: wrap;
