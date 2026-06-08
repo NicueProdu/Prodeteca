@@ -28,6 +28,7 @@ export default defineConfig({
         login: 'login.html',
         predictions: 'predictions.html',
         ranking: 'ranking.html',
+        'ranking-area': 'ranking-area.html',
         matches: 'matches.html',
         profile: 'profile.html',
         admin: 'admin.html',
