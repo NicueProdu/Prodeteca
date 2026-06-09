@@ -1,0 +1,16 @@
+/* ============================================================
+   Prodeteca · app.css — bundle de estilos de la app (no-login)
+   ------------------------------------------------------------
+   ÚNICO punto de entrada de CSS para las páginas internas. El
+   orden de los @import IMPORTA y se respeta al inlinearse: las
+   reglas mobile de responsive.css van últimas para poder pisar
+   a las base de main.css/components.css (un @media no agrega
+   especificidad, así que el empate lo gana la última regla).
+
+   Antes cada página linkeaba main/components/responsive por
+   separado y Vite los reordenaba en el build (main.css quedaba
+   al final), por lo que las reglas mobile nunca se aplicaban.
+   ============================================================ */
+@import './main.css';
+@import './components.css';
+@import './responsive.css';
