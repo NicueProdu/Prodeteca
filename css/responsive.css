@@ -32,20 +32,20 @@
     flex: 0 0 100%;
     width: 100%;
     margin-top: 2px;
-    padding: 3px;
+    padding: 3px 2px;
     gap: 1px;
   }
 
   /* Las 4 tabs se reparten el ancho en partes iguales, SIN scroll.
-     Letra chica + padding mínimo para que "Predicciones" / "Partidos"
-     entren completas sin truncarse. */
+     Letra chica + padding horizontal mínimo para que "Predicciones" /
+     "Partidos" entren completas sin truncarse. */
   .nav-tab {
     flex: 1 1 0;
     min-width: 0;
     text-align: center;
-    padding: 7px 2px;
-    font-size: 0.66rem;
-    letter-spacing: -0.01em;
+    padding: 7px 1px;
+    font-size: 0.62rem;
+    letter-spacing: -0.02em;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -124,10 +124,10 @@
   }
 
   /* Page container needs room for the bottom bar */
-  /* Deja lugar para el nav FIJO de dos filas (~104px) + respiro.
-     Sin esto el contenido (filtros, primera card) quedaría debajo del nav. */
+  /* Deja lugar para el nav FIJO de dos filas (~104px) + un respiro extra
+     para que la topbar/nav nunca tape el contenido (filtros, primera card). */
   .page-container {
-    padding-top: 116px;
+    padding-top: 128px;
     padding-bottom: 96px;
   }
 
