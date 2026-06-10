@@ -2,6 +2,7 @@
  * Import Mundial 2026 fixture from .ics file into Supabase.
  * Usage: node scripts/import-ics.js path/to/fixture.ics
  */
+//toy re locoo
 
 import { createClient } from '@supabase/supabase-js'
 import { readFileSync } from 'fs'
