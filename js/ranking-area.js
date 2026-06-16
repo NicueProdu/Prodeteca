@@ -62,7 +62,7 @@ async function loadAndRender() {
 
   const baseQueries = [
     supabase.from('users').select('id, name, avatar_url, email, area'),
-    supabase.from('predictions').select('user_id, points_earned').limit(100000),
+    supabase.from('predictions').select('user_id, points_earned').limit(20000),
     supabase.from('champion_predictions').select('user_id, total_points'),
   ]
 

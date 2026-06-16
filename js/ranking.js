@@ -38,7 +38,7 @@ async function init() {
 async function loadAll() {
   const [usersRes, predsRes, champsRes, matchesRes] = await Promise.all([
     supabase.from('users').select('id, name, avatar_url, email'),
-    supabase.from('predictions').select('user_id, match_id, home_score_pred, away_score_pred, points_earned').limit(100000),
+    supabase.from('predictions').select('user_id, match_id, home_score_pred, away_score_pred, points_earned').limit(20000),
     supabase.from('champion_predictions').select('user_id, total_points'),
     supabase.from('matches')
       .select('id, status, match_datetime_utc, home_team, away_team')
