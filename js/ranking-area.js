@@ -49,6 +49,22 @@ function renderSkeleton() {
     </div>`
 }
 
+async function fetchAllPredictions(columns, filter) {
+  const PAGE = 1000
+  const rows = []
+  let from = 0
+  while (true) {
+    let q = supabase.from('predictions').select(columns).range(from, from + PAGE - 1)
+    if (filter) q = filter(q)
+    const { data, error } = await q
+    if (error || !data?.length) break
+    rows.push(...data)
+    if (data.length < PAGE) break
+    from += PAGE
+  }
+  return rows
+}
+
 async function loadAndRender() {
   // Últimos N partidos terminados (para filtrar activos)
   const { data: lastMatches } = await supabase
@@ -60,14 +76,10 @@ async function loadAndRender() {
 
   const lastMatchIds = (lastMatches || []).map(m => m.id)
 
-  const baseQueries = [
+  const [usersRes, allPredRows, champsRes, recentPredsRes] = await Promise.all([
     supabase.from('users').select('id, name, avatar_url, email, area'),
-    supabase.from('predictions').select('user_id, points_earned').limit(20000),
+    fetchAllPredictions('user_id, points_earned'),
     supabase.from('champion_predictions').select('user_id, total_points'),
-  ]
-
-  const [usersRes, predsRes, champsRes, recentPredsRes] = await Promise.all([
-    ...baseQueries,
     lastMatchIds.length > 0
       ? supabase.from('predictions').select('user_id').in('match_id', lastMatchIds)
       : Promise.resolve({ data: [] }),
@@ -79,7 +91,7 @@ async function loadAndRender() {
   const activeSet = new Set((recentPredsRes?.data || []).map(p => p.user_id))
 
   const predMap = {}
-  for (const p of predsRes.data || []) {
+  for (const p of allPredRows) {
     if (p.points_earned == null) continue
     predMap[p.user_id] = (predMap[p.user_id] || 0) + p.points_earned
   }

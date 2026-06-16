@@ -35,10 +35,27 @@ async function init() {
   subscribeRealtime()
 }
 
+async function fetchAllPredictions(columns) {
+  const PAGE = 1000
+  const rows = []
+  let from = 0
+  while (true) {
+    const { data, error } = await supabase
+      .from('predictions')
+      .select(columns)
+      .range(from, from + PAGE - 1)
+    if (error || !data?.length) break
+    rows.push(...data)
+    if (data.length < PAGE) break
+    from += PAGE
+  }
+  return rows
+}
+
 async function loadAll() {
-  const [usersRes, predsRes, champsRes, matchesRes] = await Promise.all([
+  const [usersRes, allPreds_, champsRes, matchesRes] = await Promise.all([
     supabase.from('users').select('id, name, avatar_url, email'),
-    supabase.from('predictions').select('user_id, match_id, home_score_pred, away_score_pred, points_earned').limit(20000),
+    fetchAllPredictions('user_id, match_id, home_score_pred, away_score_pred, points_earned'),
     supabase.from('champion_predictions').select('user_id, total_points'),
     supabase.from('matches')
       .select('id, status, match_datetime_utc, home_team, away_team')
@@ -50,7 +67,7 @@ async function loadAll() {
   if (usersRes.error) { showToast('Error cargando ranking', 'error'); return }
 
   const users = usersRes.data || []
-  allPreds = predsRes.data || []
+  allPreds = allPreds_
   lastMatches = matchesRes.data || []
   claudeUser = users.find(u => (u.name || '').toLowerCase() === CLAUDE_NAME.toLowerCase()
                             || (u.email || '').toLowerCase().startsWith('claude@')) || null
