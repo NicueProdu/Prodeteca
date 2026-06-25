@@ -28,12 +28,29 @@ async function init() {
   renderHistory()
 }
 
+async function fetchAllPredictions() {
+  const PAGE = 1000
+  const rows = []
+  let from = 0
+  while (true) {
+    const { data, error } = await supabase
+      .from('predictions')
+      .select('user_id, points_earned')
+      .range(from, from + PAGE - 1)
+    if (error || !data?.length) break
+    rows.push(...data)
+    if (data.length < PAGE) break
+    from += PAGE
+  }
+  return rows
+}
+
 async function loadAll() {
-  const [matchesRes, predsRes, champRes, allPredsRes, allChampsRes, usersRes] = await Promise.all([
+  const [matchesRes, predsRes, champRes, allPredRows, allChampsRes, usersRes] = await Promise.all([
     supabase.from('matches').select('*').order('match_datetime_utc', { ascending: false }),
     supabase.from('predictions').select('*').eq('user_id', currentUser.id),
     supabase.from('champion_predictions').select('*').eq('user_id', currentUser.id).maybeSingle(),
-    supabase.from('predictions').select('user_id, points_earned'),
+    fetchAllPredictions(),
     supabase.from('champion_predictions').select('user_id, total_points'),
     supabase.from('users').select('id'),
   ])
@@ -44,7 +61,7 @@ async function loadAll() {
 
   // Compute rank client-side (same logic as ranking.js)
   const predMap = {}
-  for (const p of (allPredsRes.data || [])) {
+  for (const p of allPredRows) {
     if (p.points_earned == null) continue
     predMap[p.user_id] = (predMap[p.user_id] || 0) + p.points_earned
   }
@@ -57,7 +74,12 @@ async function loadAll() {
   const sorted = [...allUserIds]
     .map(uid => (predMap[uid] || 0) + (champMap[uid] || 0))
     .sort((a, b) => b - a)
-  const myTotal = (predMap[currentUser.id] || 0) + (champMap[currentUser.id] || 0)
+  // Compute own total from allPreds (already complete, no pagination issue)
+  let myMatchPts = 0
+  for (const p of allPreds) {
+    if (p.points_earned != null) myMatchPts += p.points_earned
+  }
+  const myTotal = myMatchPts + (champ?.total_points || 0)
   currentUser._rank = sorted.findIndex(t => t <= myTotal) + 1
 }
 
