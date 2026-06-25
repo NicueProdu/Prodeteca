@@ -6,9 +6,8 @@
 -- de la fase eliminatoria. Es seguro hacerlo mientras no haya
 -- predicciones cargadas para esos partidos (antes de Jun 28).
 --
--- Los horarios son ET convertidos a UTC (EDT = UTC-4).
--- Todos los tiempos son APROXIMADOS. Verificar con el fixture
--- oficial de FIFA si necesitás exactitud total.
+-- Los horarios son ART (UTC-3) convertidos a UTC.
+-- Actualizados con fixture oficial FIFA.
 -- ============================================================
 
 -- Limpiar partidos eliminatorios existentes (incompletos)
@@ -29,68 +28,68 @@ VALUES
 
 -- Lunes 29 Jun (3 partidos)
 ('2026-06-29 17:00:00+00','2026-06-29 16:50:00+00',
- 'Group E Winner','Third Place Group A/B/C/D/F',
- 'round_of_32','upcoming','Estadio Boston'),                -- P74 · 13:00 ET
+ 'Group C Winner','Group F Second Place',
+ 'round_of_32','upcoming','Estadio Houston'),               -- P76 · 14:00 ART
 
-('2026-06-29 21:00:00+00','2026-06-29 20:50:00+00',
- 'Group F Winner','Group C Second Place',
- 'round_of_32','upcoming','Estadio Monterrey'),             -- P75 · 17:00 ET
+('2026-06-29 20:30:00+00','2026-06-29 20:20:00+00',
+ 'Group E Winner','Third Place Group A/B/C/D/F',
+ 'round_of_32','upcoming','Estadio Boston'),                -- P74 · 17:30 ART
 
 ('2026-06-30 01:00:00+00','2026-06-30 00:50:00+00',
- 'Group C Winner','Group F Second Place',
- 'round_of_32','upcoming','Estadio Houston'),               -- P76 · 21:00 ET
+ 'Group F Winner','Group C Second Place',
+ 'round_of_32','upcoming','Estadio Monterrey'),             -- P75 · 22:00 ART
 
 -- Martes 30 Jun (3 partidos)
 ('2026-06-30 17:00:00+00','2026-06-30 16:50:00+00',
- 'Group I Winner','Third Place Group C/D/F/G/H',
- 'round_of_32','upcoming','Estadio Nueva York Nueva Jersey'), -- P77 · 13:00 ET
+ 'Group E Second Place','Group I Second Place',
+ 'round_of_32','upcoming','Estadio Dallas'),                -- P78 · 14:00 ART
 
 ('2026-06-30 21:00:00+00','2026-06-30 20:50:00+00',
- 'Group E Second Place','Group I Second Place',
- 'round_of_32','upcoming','Estadio Dallas'),                -- P78 · 17:00 ET
+ 'Group I Winner','Third Place Group C/D/F/G/H',
+ 'round_of_32','upcoming','Estadio Nueva York Nueva Jersey'), -- P77 · 18:00 ART
 
 ('2026-07-01 01:00:00+00','2026-07-01 00:50:00+00',
  'Group A Winner','Third Place Group C/E/F/H/I',
- 'round_of_32','upcoming','Estadio Ciudad de México'),      -- P79 · 21:00 ET
+ 'round_of_32','upcoming','Estadio Ciudad de México'),      -- P79 · 22:00 ART
 
 -- Miércoles 1 Jul (3 partidos)
-('2026-07-01 17:00:00+00','2026-07-01 16:50:00+00',
+('2026-07-01 16:00:00+00','2026-07-01 15:50:00+00',
  'Group L Winner','Third Place Group E/H/I/J/K',
- 'round_of_32','upcoming','Estadio Atlanta'),               -- P80 · 13:00 ET
+ 'round_of_32','upcoming','Estadio Atlanta'),               -- P80 · 13:00 ART
 
-('2026-07-01 21:00:00+00','2026-07-01 20:50:00+00',
- 'Group D Winner','Third Place Group B/E/F/I/J',
- 'round_of_32','upcoming','Estadio Bahía de San Francisco'), -- P81 · 17:00 ET
-
-('2026-07-02 01:00:00+00','2026-07-02 00:50:00+00',
+('2026-07-01 20:00:00+00','2026-07-01 19:50:00+00',
  'Group G Winner','Third Place Group A/E/H/I/J',
- 'round_of_32','upcoming','Estadio Seattle'),               -- P82 · 21:00 ET
+ 'round_of_32','upcoming','Estadio Seattle'),               -- P82 · 17:00 ART
+
+('2026-07-02 00:00:00+00','2026-07-01 23:50:00+00',
+ 'Group D Winner','Third Place Group B/E/F/I/J',
+ 'round_of_32','upcoming','Estadio Bahía de San Francisco'), -- P81 · 21:00 ART
 
 -- Jueves 2 Jul (3 partidos)
-('2026-07-02 17:00:00+00','2026-07-02 16:50:00+00',
- 'Group K Second Place','Group L Second Place',
- 'round_of_32','upcoming','Estadio Toronto'),               -- P83 · 13:00 ET
-
-('2026-07-02 21:00:00+00','2026-07-02 20:50:00+00',
+('2026-07-02 19:00:00+00','2026-07-02 18:50:00+00',
  'Group H Winner','Group J Second Place',
- 'round_of_32','upcoming','Estadio Los Ángeles'),           -- P84 · 17:00 ET
+ 'round_of_32','upcoming','Estadio Los Ángeles'),           -- P84 · 16:00 ART
 
-('2026-07-03 01:00:00+00','2026-07-03 00:50:00+00',
- 'Group B Winner','Third Place Group E/F/G/I/J',
- 'round_of_32','upcoming','Estadio BC Place Vancouver'),    -- P85 · 21:00 ET
+('2026-07-02 23:00:00+00','2026-07-02 22:50:00+00',
+ 'Group K Second Place','Group L Second Place',
+ 'round_of_32','upcoming','Estadio Toronto'),               -- P83 · 20:00 ART
+
+('2026-07-03 01:30:00+00','2026-07-03 01:20:00+00',
+ 'Group K Winner','Third Place Group D/E/I/J/L',
+ 'round_of_32','upcoming','Estadio Kansas City'),           -- P87 · 22:30 ART
 
 -- Viernes 3 Jul (3 partidos)
-('2026-07-03 17:00:00+00','2026-07-03 16:50:00+00',
- 'Group J Winner','Group H Second Place',
- 'round_of_32','upcoming','Estadio Miami'),                 -- P86 · 13:00 ET
+('2026-07-03 03:00:00+00','2026-07-03 02:50:00+00',
+ 'Group B Winner','Third Place Group E/F/G/I/J',
+ 'round_of_32','upcoming','Estadio BC Place Vancouver'),    -- P85 · 00:00 ART
 
-('2026-07-03 21:00:00+00','2026-07-03 20:50:00+00',
- 'Group K Winner','Third Place Group D/E/I/J/L',
- 'round_of_32','upcoming','Estadio Kansas City'),           -- P87 · 17:00 ET
-
-('2026-07-04 01:00:00+00','2026-07-04 00:50:00+00',
+('2026-07-03 19:00:00+00','2026-07-03 18:50:00+00',
  'Group D Second Place','Group G Second Place',
- 'round_of_32','upcoming','Estadio Dallas');                -- P88 · 21:00 ET
+ 'round_of_32','upcoming','Estadio Dallas'),                -- P88 · 16:00 ART
+
+('2026-07-03 22:00:00+00','2026-07-03 21:50:00+00',
+ 'Group J Winner','Group H Second Place',
+ 'round_of_32','upcoming','Estadio Miami');                 -- P86 · 19:00 ART
 
 
 -- ============================================================

@@ -29,12 +29,13 @@ async function init() {
 }
 
 async function loadAll() {
-  const [matchesRes, predsRes, champRes, allPredsRes, allChampsRes] = await Promise.all([
+  const [matchesRes, predsRes, champRes, allPredsRes, allChampsRes, usersRes] = await Promise.all([
     supabase.from('matches').select('*').order('match_datetime_utc', { ascending: false }),
     supabase.from('predictions').select('*').eq('user_id', currentUser.id),
     supabase.from('champion_predictions').select('*').eq('user_id', currentUser.id).maybeSingle(),
     supabase.from('predictions').select('user_id, points_earned'),
     supabase.from('champion_predictions').select('user_id, total_points'),
+    supabase.from('users').select('id'),
   ])
 
   allMatches = matchesRes.data || []
@@ -51,7 +52,8 @@ async function loadAll() {
   for (const c of (allChampsRes.data || [])) {
     champMap[c.user_id] = c.total_points || 0
   }
-  const allUserIds = new Set([...Object.keys(predMap), ...Object.keys(champMap), currentUser.id])
+  // Use full users list so rank matches ranking.js (includes users with 0 pts)
+  const allUserIds = new Set((usersRes.data || []).map(u => u.id))
   const sorted = [...allUserIds]
     .map(uid => (predMap[uid] || 0) + (champMap[uid] || 0))
     .sort((a, b) => b - a)
